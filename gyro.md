@@ -1,5 +1,5 @@
 ---
-layout: empty
+layout: page
 title: Gyro
 permalink: /gyro/
 ---
