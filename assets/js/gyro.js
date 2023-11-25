@@ -7,9 +7,8 @@ function updateFieldIfNotNull(fieldName, value, precision=10){
   console.log(fieldName, value)
 }
 function handleOrientation(event) {
-    updateFieldIfNotNull('Orientation_a', event.alpha);
-    updateFieldIfNotNull('Orientation_b', event.beta);
-    updateFieldIfNotNull('Orientation_g', event.gamma);
+    document.getElementsByTagName("body")[0].style.backgroundPositionX = Math.round(event.gamma) + "px"
+    document.getElementsByTagName("body")[0].style.backgroundPositionY = Math.round(d_beta) + "px"
   }
 
 document.addEventListener("click", function(e) {
