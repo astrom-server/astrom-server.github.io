@@ -8,4 +8,5 @@ permalink: /gyro/
 <div id="ball"></div>
 <button onclick="sensor=5">Hello</button>
 <button onclick="document.getElementById('report_box').innerHTML = sensor">Hell2</button>
+<button onclick="console.log('hehe')">Hello 3</button>
 
