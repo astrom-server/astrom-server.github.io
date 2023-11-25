@@ -10,6 +10,3 @@ permalink: /gyro/
 <button onclick="document.getElementById('report_box').innerHTML = sensor">Hell2</button>
 <button onclick="console.log(sensor)">Hello 3</button>
 
-<script>
-   console.log("hi")
-</script>
