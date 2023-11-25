@@ -11,12 +11,12 @@ permalink: /gyro/
    let sensor = new Gyroscope()
    let x,y,z,report;
    sensor.start()
-      document.getElementById("report_box").innerHTML = "Starting"
+   document.getElementById("report_box").innerHTML = "Starting"
    sensor.onreading = () => {
       report = "X: " + sensor.x + "<br>"
       report += "Y: " + sensor.y + "<br>"
       report += "Z: " + sensor.z + "<br>"
-      document.getElementById("report_box").innerHTML = report
+      //document.getElementById("report_box").innerHTML = report
       console.log(report)
    }
    sensor.onerror = (e) => {
