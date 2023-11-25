@@ -6,7 +6,18 @@ permalink: /gyro/
 
 <div id="report_box"></div>
 <div id="ball"></div>
-<button onclick="sensor=5">Hello</button>
-<button onclick="document.getElementById('report_box').innerHTML = sensor">Hell2</button>
-<button onclick="console.log(1)">Hello 3</button>
 
+
+<script>
+
+   function handleOrientation(event) {
+   const alpha = event.alpha;
+   const beta = event.beta;
+   const gamma = event.gamma;
+   report = alpha + ", " + beta + ", " + gamma
+   console.log(report)
+   document.getElementById('report_box').innerHTML = report
+   }
+   console.log("starting")
+   window.addEventListener('deviceorientation', handleOrientation);
+</script>
