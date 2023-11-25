@@ -3,7 +3,7 @@ console.log("starting")
 
 document.addEventListener("click", () => {
     console.log("hi")
-    
+
     let gyroscope = new Gyroscope({ frequency: 60 });
     gyroscope.addEventListener("reading", (e) => {
       console.log(`Angular velocity along the X-axis ${gyroscope.x}`);
@@ -13,7 +13,9 @@ document.addEventListener("click", () => {
     gyroscope.onerror = (e) => {
         console.log(e)
     }
+    console.log(gyroscope.toString())
     gyroscope.start();
+    console.log("hi2")
 })
 function handleOrientation(event) {
     console.log("triggered")
