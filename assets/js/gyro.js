@@ -3,8 +3,11 @@ console.log("starting")
 
 document.addEventListener("click", () => {
     console.log("hi")
+    console.log("hi3")
 
     let gyroscope = new Gyroscope({ frequency: 60 });
+    console.log("hi4")
+    console.log(gyroscope)
     gyroscope.addEventListener("reading", (e) => {
       console.log(`Angular velocity along the X-axis ${gyroscope.x}`);
       console.log(`Angular velocity along the Y-axis ${gyroscope.y}`);
