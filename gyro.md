@@ -12,6 +12,7 @@ permalink: /gyro/
    let x,y,z,report;
    sensor.start()
    document.getElementById("report_box").innerHTML = "Starting"
+   console.log("starting")
    sensor.onreading = () => {
       report = "X: " + sensor.x + "<br>"
       report += "Y: " + sensor.y + "<br>"
