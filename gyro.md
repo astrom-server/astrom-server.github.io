@@ -6,5 +6,6 @@ permalink: /gyro/
 
 <div id="report_box"></div>
 <div id="ball"></div>
-<button>Hello</button>
+<button onclick="sensor=5">Hello</button>
+<button onclick="document.getElementById('report_box').innerHTML = sensor">Hell2</button>
 
