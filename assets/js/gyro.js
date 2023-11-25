@@ -1,25 +1,35 @@
 
 console.log("starting")
 console.log(window.DeviceOrientationEvent)
+is_running = false
 
-document.addEventListener("click", () => {
-    console.log("hi")
-    console.log(2)
-    console.log(window.DeviceOrientationEvent)
-})
-
-if (DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission === "function") {
-    DeviceMotionEvent.requestPermission();
+function updateFieldIfNotNull(fieldName, value, precision=10){
+  console.log(fieldName, value)
 }
-
-window.addEventListener('deviceorientation', handleOrientation, true);
 function handleOrientation(event) {
-    console.log("triggered")
-    const alpha = event.alpha;
-    const beta = event.beta;
-    const gamma = event.gamma;
-    report = alpha + ", " + beta + ", " + gamma
-    console.log(report)
-    report_box =  document.getElementById('report_box')
-    if (report_box != undefined) report_box.innerHTML = report
-}
+    updateFieldIfNotNull('Orientation_a', event.alpha);
+    updateFieldIfNotNull('Orientation_b', event.beta);
+    updateFieldIfNotNull('Orientation_g', event.gamma);
+  }
+
+document.addEventListener("click", function(e) {
+    e.preventDefault();
+    console.log(is_running)
+    
+    // Request permission for iOS 13+ devices
+    if (
+      DeviceMotionEvent &&
+      typeof DeviceMotionEvent.requestPermission === "function"
+    ) {
+      DeviceMotionEvent.requestPermission();
+    }
+    
+    if (is_running){
+      window.removeEventListener("deviceorientation", handleOrientation);
+      is_running = false;
+    }else{
+      window.addEventListener("deviceorientation", handleOrientation);
+      is_running = true;
+    }
+    console.log(is_running)
+  })
