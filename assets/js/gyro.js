@@ -7,6 +7,11 @@ document.addEventListener("click", () => {
     console.log(2)
     console.log(window.DeviceOrientationEvent)
 })
+
+if (DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission === "function") {
+    DeviceMotionEvent.requestPermission();
+}
+
 window.addEventListener('deviceorientation', handleOrientation, true);
 function handleOrientation(event) {
     console.log("triggered")
