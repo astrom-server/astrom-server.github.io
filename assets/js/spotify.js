@@ -142,8 +142,8 @@ function handleMotionEvent(event) {
     beta += event.rotationRate.beta*v;
     gamma += event.rotationRate.gamma*v;
 
-    document.getElementsByTagName("body")[0].style.backgroundPositionX = Math.round(alpha) + "vw"
-    document.getElementsByTagName("body")[0].style.backgroundPositionY = Math.round(beta) + "vh"
+    document.getElementsByTagName("body")[0].style.backgroundPositionX = Math.round(beta) + "vw"
+    document.getElementsByTagName("body")[0].style.backgroundPositionY = Math.round(alpha) + "vh"
 }
 
 function enable_gyro() {
