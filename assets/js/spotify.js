@@ -118,33 +118,54 @@ function playSound(url) {
     current_audio.play();
 }
 
+
+
+
+
+console.log("starting")
+console.log(window.DeviceOrientationEvent)
+is_running = false
+
+function updateFieldIfNotNull(fieldName, value, precision=10){
+  console.log(fieldName, value)
+}
+function handleOrientation(event) {
+    //document.getElementsByTagName("body")[0].style.backgroundPositionX = Math.round(100*event.gamma/90) + "vw"
+    //document.getElementsByTagName("body")[0].style.backgroundPositionY = Math.round(100*event.beta/90) + "vh"
+}
+let x = 0;
+let y = 0;
+let v = 0.020;
+function handleMotionEvent(event) {
+    x += event.rotationRate.gamma*v;
+    y += event.rotationRate.beta*v;
+
+    document.getElementsByTagName("body")[0].style.backgroundPositionX = Math.round(x) + "vw"
+    document.getElementsByTagName("body")[0].style.backgroundPositionY = Math.round(y) + "vh"
+}
+
 function enable_gyro() {
-    console.log("Enabling Gyro Start")
-
-
-    function updateFieldIfNotNull(fieldName, value, precision=10){
-        console.log(fieldName, value)
-    }
-    function handleOrientation(event) {
-        console.log(event.gamma)
-        console.log(event)
-        document.getElementsByTagName("body")[0].style.backgroundPositionX = Math.round(100*event.gamma/90) + "vw"
-        document.getElementsByTagName("body")[0].style.backgroundPositionY = Math.round(100*event.beta/90) + "vh"
-    }
-    
+    e.preventDefault();
+    console.log(is_running)
     
     // Request permission for iOS 13+ devices
-    console.log(DeviceMotionEvent)
-    console.log(DeviceMotionEvent.requestPermission)
     if (
-        DeviceMotionEvent &&
-        typeof DeviceMotionEvent.requestPermission === "function"
+      DeviceMotionEvent &&
+      typeof DeviceMotionEvent.requestPermission === "function"
     ) {
-        DeviceMotionEvent.requestPermission();
+      DeviceMotionEvent.requestPermission();
     }
     
-    console.log("Enabling Gyro")
-    window.addEventListener("deviceorientation", handleOrientation);
+    if (is_running){
+      window.removeEventListener("deviceorientation", handleOrientation, true);
+      window.removeEventListener("devicemotion", handleMotionEvent, true);
+      is_running = false;
+    }else{
+      window.addEventListener("deviceorientation", handleOrientation, true);
+      window.addEventListener("devicemotion", handleMotionEvent, true);
+      is_running = true;
+    }
+    console.log(is_running)
 }
 
 
