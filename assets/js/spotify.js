@@ -133,15 +133,17 @@ function handleOrientation(event) {
     //document.getElementsByTagName("body")[0].style.backgroundPositionX = Math.round(100*event.gamma/90) + "vw"
     //document.getElementsByTagName("body")[0].style.backgroundPositionY = Math.round(100*event.beta/90) + "vh"
 }
-let x = 0;
-let y = 0;
+let alpha = 0;
+let beta = 0;
+let gamma = 0;
 let v = 0.020;
 function handleMotionEvent(event) {
-    x += event.rotationRate.gamma*v;
-    y += event.rotationRate.beta*v;
+    alpha += event.rotationRate.alpha*v;
+    beta += event.rotationRate.beta*v;
+    gamma += event.rotationRate.gamma*v;
 
-    document.getElementsByTagName("body")[0].style.backgroundPositionX = Math.round(x) + "vw"
-    document.getElementsByTagName("body")[0].style.backgroundPositionY = Math.round(y) + "vh"
+    document.getElementsByTagName("body")[0].style.backgroundPositionX = Math.round(alpha) + "vw"
+    document.getElementsByTagName("body")[0].style.backgroundPositionY = Math.round(beta) + "vh"
 }
 
 function enable_gyro() {
