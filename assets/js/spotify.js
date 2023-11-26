@@ -145,7 +145,6 @@ function handleMotionEvent(event) {
 }
 
 function enable_gyro() {
-    e.preventDefault();
     console.log(is_running)
     
     // Request permission for iOS 13+ devices
