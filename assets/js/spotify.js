@@ -119,6 +119,7 @@ function playSound(url) {
 }
 
 function enable_gyro() {
+    console.log("Enabling Gyro Start")
 
 
     function updateFieldIfNotNull(fieldName, value, precision=10){
@@ -133,6 +134,8 @@ function enable_gyro() {
     
     
     // Request permission for iOS 13+ devices
+    console.log(DeviceMotionEvent)
+    console.log(DeviceMotionEvent.requestPermission)
     if (
         DeviceMotionEvent &&
         typeof DeviceMotionEvent.requestPermission === "function"
