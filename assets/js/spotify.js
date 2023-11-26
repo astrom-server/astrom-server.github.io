@@ -125,6 +125,8 @@ function enable_gyro() {
         console.log(fieldName, value)
     }
     function handleOrientation(event) {
+        console.log(event.gamma)
+        console.log(event)
         document.getElementsByTagName("body")[0].style.backgroundPositionX = Math.round(100*event.gamma/90) + "vw"
         document.getElementsByTagName("body")[0].style.backgroundPositionY = Math.round(100*event.beta/90) + "vh"
     }
