@@ -137,8 +137,8 @@ let x = 0;
 let y = 0;
 let v = 0.020;
 function handleMotionEvent(event) {
-    x += event.rotationRate.gamma*v;
-    y += event.rotationRate.beta*v;
+    x += event.rotationRate.beta*v;
+    y += event.rotationRate.alpha*v;
 
     document.getElementsByTagName("body")[0].style.backgroundPositionX = Math.round(x) + "vw"
     document.getElementsByTagName("body")[0].style.backgroundPositionY = Math.round(y) + "vh"
