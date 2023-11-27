@@ -14,16 +14,14 @@ let x = 0;
 let y = 0;
 let v = 0.020;
 function handleMotionEvent(event) {
-    x += event.rotationRate.gamma*v;
-    y += event.rotationRate.beta*v;
+    x += event.rotationRate.beta*v;
+    y += event.rotationRate.alpha*v;
 
     document.getElementsByTagName("body")[0].style.backgroundPositionX = Math.round(x) + "vw"
     document.getElementsByTagName("body")[0].style.backgroundPositionY = Math.round(y) + "vh"
 }
-  
 
-document.addEventListener("click", function(e) {
-    e.preventDefault();
+function enable_gyro() {
     console.log(is_running)
     
     // Request permission for iOS 13+ devices
@@ -44,4 +42,5 @@ document.addEventListener("click", function(e) {
       is_running = true;
     }
     console.log(is_running)
-  })
+}
+enable_gyro()
