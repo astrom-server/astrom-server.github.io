@@ -43,4 +43,3 @@ function enable_gyro() {
     }
     console.log(is_running)
 }
-enable_gyro()
