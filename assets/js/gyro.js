@@ -13,13 +13,26 @@ function handleOrientation(event) {
 }
 let x = 0;
 let y = 0;
-let v = 0.020;
+let r = 0
+let image_count = 20;
+let lastTime = undefined;
 function handleMotionEvent(event) {
-    x += event.rotationRate.beta*v;
-    y += event.rotationRate.alpha*v;
+    if (lastTime != undefined) {
+      let deltatime = (Date.now() - lastTime)/1000
 
-    document.getElementsByTagName("body")[0].style.backgroundPositionX = Math.round(x) + "vw"
-    document.getElementsByTagName("body")[0].style.backgroundPositionY = Math.round(y) + "vh"
+
+      x += event.rotationRate.beta*100/image_count/360*deltatime;
+      y += event.rotationRate.alpha*100/image_count/360*deltatime;
+      r += event.rotationRate.alpha*deltatime;
+
+  
+      document.getElementsByTagName("body")[0].style["--background-x"] = Math.round(x) + "vw"
+      document.getElementsByTagName("body")[0].style["--background-x"] = Math.round(y) + "vh"
+      document.getElementsByTagName("body")[0].style["--background-rotation"] = "rotate(" + Math.round(y) + "deg)"
+      return;
+    }
+    
+    lastTime = Date.now()
 }
 
 function enable_gyro(message) {
@@ -38,5 +51,4 @@ function enable_gyro(message) {
 }
 
 document.addEventListener("click", () => enable_gyro("click"))
-setTimeout(() => enable_gyro("timout"), 5000);
 enable_gyro("gyro start")

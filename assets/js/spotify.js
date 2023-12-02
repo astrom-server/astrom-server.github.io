@@ -20,7 +20,6 @@ function authorize() {
             let response = JSON.parse(event.target.response)
             console.log(response)
             access_token = response.access_token
-            enable_gyro("spotify callback")
         } else if (event.target.status == 400) {
             console.error(event.target)
         }
