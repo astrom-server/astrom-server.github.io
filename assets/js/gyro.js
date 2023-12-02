@@ -21,15 +21,14 @@ function handleMotionEvent(event) {
       let deltatime = (Date.now() - lastTime)/1000
 
 
-      x += event.rotationRate.beta*100/image_count/360*deltatime;
-      y += event.rotationRate.alpha*100/image_count/360*deltatime;
-      r += event.rotationRate.alpha*deltatime;
+      x += event.rotationRate.beta*100*image_count/360*deltatime;
+      y += event.rotationRate.alpha*100*image_count/360*deltatime;
+      r += event.rotationRate.gamma*deltatime;
 
   
       document.getElementsByTagName("body")[0].style["--background-x"] = Math.round(x) + "vw"
       document.getElementsByTagName("body")[0].style["--background-x"] = Math.round(y) + "vh"
       document.getElementsByTagName("body")[0].style["--background-rotation"] = "rotate(" + Math.round(y) + "deg)"
-      return;
     }
     
     lastTime = Date.now()
