@@ -25,18 +25,9 @@ function enable_gyro() {
     console.log(is_running)
     
     // Request permission for iOS 13+ devices
-    if (
-      DeviceMotionEvent &&
-      typeof DeviceMotionEvent.requestPermission === "function"
-    ) {
-      DeviceMotionEvent.requestPermission();
-    }
+    DeviceMotionEvent.requestPermission();
     
-    if (is_running){
-      window.removeEventListener("deviceorientation", handleOrientation, true);
-      window.removeEventListener("devicemotion", handleMotionEvent, true);
-      is_running = false;
-    }else{
+    if (!is_running) {
       window.addEventListener("deviceorientation", handleOrientation, true);
       window.addEventListener("devicemotion", handleMotionEvent, true);
       is_running = true;
