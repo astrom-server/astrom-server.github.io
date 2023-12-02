@@ -28,7 +28,7 @@ function handleMotionEvent(event) {
   
       document.getElementsByTagName("body")[0].style.setProperty("--background-x",  Math.round(x) + "vw")
       document.getElementsByTagName("body")[0].style.setProperty("--background-y",  Math.round(y) + "vh")
-      document.getElementsByTagName("body")[0].style.setProperty("--background-rotation",  "rotate(" + Math.round(r) + "deg)")
+      //document.getElementsByTagName("body")[0].style.setProperty("--background-rotation",  "rotate(" + Math.round(r) + "deg)")
     }
     
     lastTime = Date.now()
