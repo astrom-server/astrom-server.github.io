@@ -95,7 +95,8 @@ function search_song(query) {
                 if (pick.preview_url != null) {
                     let pick = response.tracks.items[0]
                     let album_cover = pick.album.images[0];
-                    document.getElementsByTagName("body")[0].background = album_cover.url
+                    document.getElementsByTagName("body")[0].style.setProperty("--background-url",  "url(" + album_cover.url + ")")
+                    document.getElementById("song_name").innerHTML = pick.name
                     playSound(pick.preview_url)
                     break;
                 }

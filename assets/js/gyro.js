@@ -26,9 +26,9 @@ function handleMotionEvent(event) {
       r += event.rotationRate.gamma*deltatime;
 
   
-      document.getElementsByTagName("body")[0].style["--background-x"] = Math.round(x) + "vw"
-      document.getElementsByTagName("body")[0].style["--background-x"] = Math.round(y) + "vh"
-      document.getElementsByTagName("body")[0].style["--background-rotation"] = "rotate(" + Math.round(y) + "deg)"
+      document.getElementsByTagName("body")[0].style.setProperty("--background-x",  Math.round(x) + "vw")
+      document.getElementsByTagName("body")[0].style.setProperty("--background-y",  Math.round(y) + "vh")
+      document.getElementsByTagName("body")[0].style.setProperty("--background-rotation",  "rotate(" + Math.round(y) + "deg)")
     }
     
     lastTime = Date.now()
