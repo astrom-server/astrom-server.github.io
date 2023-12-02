@@ -3,6 +3,7 @@ console.log("starting")
 console.log(window.DeviceOrientationEvent)
 is_running = false
 
+
 function updateFieldIfNotNull(fieldName, value, precision=10){
   console.log(fieldName, value)
 }
@@ -21,7 +22,8 @@ function handleMotionEvent(event) {
     document.getElementsByTagName("body")[0].style.backgroundPositionY = Math.round(y) + "vh"
 }
 
-function enable_gyro() {
+function enable_gyro(message) {
+    console.log(message)
     console.log(is_running)
     
     // Request permission for iOS 13+ devices
@@ -30,7 +32,11 @@ function enable_gyro() {
     if (!is_running) {
       window.addEventListener("deviceorientation", handleOrientation, true);
       window.addEventListener("devicemotion", handleMotionEvent, true);
-      is_running = true;
+      is_running = false;
     }
     console.log(is_running)
 }
+
+document.addEventListener("click", () => enable_gyro("click"))
+setTimeout(() => enable_gyro("timout"), 5000);
+enable_gyro("gyro start")
