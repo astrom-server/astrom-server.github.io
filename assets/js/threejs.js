@@ -1,8 +1,8 @@
 
-if (typeof orientation_callbacks == "undefined") {
-    orientation_callbacks = []
+if (typeof motion_callbacks == "undefined") {
+    motion_callbacks = []
 }
-orientation_callbacks.push(
+motion_callbacks.push(
     (coords) => {
         console.log(coords)
         camera.rotation.setFromVector3(new THREE.Vector3(coords.beta, coords.gamma, coords.alpha).multiplyScalar(Math.PI/180))
