@@ -18,7 +18,7 @@ function handleOrientation(event) {
     gamma: event.gamma
   }
 
-  for (const callback of motion_callbacks) {
+  for (const callback of orientation_callbacks) {
     callback(coords)
   }
 }
