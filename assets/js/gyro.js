@@ -18,6 +18,8 @@ function handleOrientation(event) {
     gamma: event.gamma
   }
 
+  console.log("handleOrientation", coords)
+  console.log(orientation_callbacks)
   for (const callback of orientation_callbacks) {
     callback(coords)
   }
@@ -51,6 +53,8 @@ function handleMotionEvent(event) {
         x, y, alpha, beta, gamma
       }
 
+      console.log("handleMotionEvent", coords)
+      console.log(motion_callbacks)
       for (const callback of motion_callbacks) {
         callback(coords)
       }
