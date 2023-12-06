@@ -2,6 +2,17 @@
 
 let access_token;
 
+if (typeof motion_callbacks == "undefined") {
+    motion_callbacks = []
+}
+motion_callbacks.push(
+    (coords) => {
+        document.getElementsByTagName("body")[0].style.setProperty("--background-x",  Math.round(coords.x) + "vw")
+        document.getElementsByTagName("body")[0].style.setProperty("--background-y",  Math.round(coords.y) + "vh")
+        document.getElementsByTagName("body")[0].style.setProperty("--background-rotation",  "rotate(" + Math.round(coords.gamma) + "deg)")
+    }
+)
+
 function authorize() {
     const client_id = 'afbe9c700e0744129f9019cab4a6fa12';
     const client_secret = '7bd9f8659a3649b192a917ff9ad2e3d7';

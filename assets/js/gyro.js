@@ -4,33 +4,56 @@ console.log(window.DeviceOrientationEvent)
 is_running = false
 
 
+if (typeof motion_callbacks == "undefined") {
+  motion_callbacks = []
+}
+if (typeof orientation_callbacks == "undefined") {
+  orientation_callbacks = []
+}
+
 function handleOrientation(event) {
-    //document.getElementsByTagName("body")[0].style.backgroundPositionX = Math.round(100*event.gamma/90) + "vw"
-    //document.getElementsByTagName("body")[0].style.backgroundPositionY = Math.round(100*event.beta/90) + "vh"
+  const coords = {
+    alpha: event.alpha,
+    beta:  event.beta, 
+    gamma: event.gamma
+  }
+
+  for (const callback of motion_callbacks) {
+    callback(coords)
+  }
 }
 let x = 0;
 let y = 0;
-let r = 0
+let alpha = 0;
+let beta = 0;
+let gamma = 0;
 let image_count = 20;
 let lastTime = undefined;
 function handleMotionEvent(event) {
     if (lastTime != undefined) {
       let deltatime = (Date.now() - lastTime)/1000
 
-      r += event.rotationRate.gamma*deltatime;
+
+      alpha += event.rotationRate.alpha*deltatime
+      beta += event.rotationRate.beta*deltatime
+      gamma += event.rotationRate.gamma*deltatime
 
       const dx = event.rotationRate.beta*100*image_count/360*deltatime
       const dy = event.rotationRate.alpha*100*image_count/360*deltatime
 
-      const cos = Math.cos(Math.PI*r/180)
-      const sin = Math.sin(Math.PI*r/180)
+      const cos = Math.cos(Math.PI*gamma/180)
+      const sin = Math.sin(Math.PI*gamma/180)
 
       x += cos*dx + sin*dy;
       y += cos*dy - sin*dx;
 
-      document.getElementsByTagName("body")[0].style.setProperty("--background-x",  Math.round(x) + "vw")
-      document.getElementsByTagName("body")[0].style.setProperty("--background-y",  Math.round(y) + "vh")
-      document.getElementsByTagName("body")[0].style.setProperty("--background-rotation",  "rotate(" + Math.round(r) + "deg)")
+      const coords = {
+        x, y, alpha, beta, gamma
+      }
+
+      for (const callback of motion_callbacks) {
+        callback(coords)
+      }
     }
     
     lastTime = Date.now()

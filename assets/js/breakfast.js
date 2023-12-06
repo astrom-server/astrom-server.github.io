@@ -2,6 +2,18 @@
 
 let access_token;
 
+
+if (typeof motion_callbacks !== "undefined") {
+    motion_callbacks = []
+}
+motion_callbacks.push(
+    (coords) => {
+        document.getElementsByTagName("body")[0].style.setProperty("--background-x",  Math.round(coords.x) + "vw")
+        document.getElementsByTagName("body")[0].style.setProperty("--background-y",  Math.round(coords.y) + "vh")
+        document.getElementsByTagName("body")[0].style.setProperty("--background-rotation",  "rotate(" + Math.round(coords.gamma) + "deg)")
+    }
+)
+
 function search_food(query) {
 
     const http = new XMLHttpRequest();
@@ -18,7 +30,7 @@ function search_food(query) {
             const response = JSON.parse(event.target.response)
             const hit = response.hits[0]
             console.log(hit)
-            document.getElementsByTagName("body")[0].background = hit.recipe.image
+            document.getElementsByTagName("body")[0].style.setProperty("--background-url",  "url(" + hit.recipe.image + ")")
             console.log(response)
         } else if (event.target.status == 400) {
             console.error(event.target)
