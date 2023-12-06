@@ -2,6 +2,8 @@
 if (typeof motion_callbacks == "undefined") {
     motion_callbacks = []
 }
+
+let vel = new THREE.Vector3()
 motion_callbacks.push(
     (coords) => {
         console.log(coords)
@@ -9,6 +11,10 @@ motion_callbacks.push(
         const x_ax = new THREE.Vector3(1, 0, 0).applyQuaternion(rot)
         const y_ax = new THREE.Vector3(0, 1, 0).applyQuaternion(rot)
         const z_ax = new THREE.Vector3(0, 0, 1).applyQuaternion(rot)
+        vel.add(new THREE.Vector3(x_ax.multiplyScalar(coords.a_x * coords.deltaTime)))
+        vel.add(new THREE.Vector3(y_ax.multiplyScalar(coords.a_y * coords.deltaTime)))
+        vel.add(new THREE.Vector3(z_ax.multiplyScalar(coords.a_z * coords.deltaTime)))
+        camera.position.add(vel.multiplyScalar(coords.deltaTime))
         camera.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(x_ax, coords.d_alpha*Math.PI/180)); 
         camera.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(y_ax, coords.d_beta*Math.PI/180)); 
         camera.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(z_ax, coords.d_gamma*Math.PI/180)); 

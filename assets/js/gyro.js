@@ -39,6 +39,10 @@ function handleMotionEvent(event) {
       const d_beta = event.rotationRate.beta*deltatime
       const d_gamma = event.rotationRate.gamma*deltatime
 
+      const a_x = event.acceleration.x*deltatime
+      const a_y = event.acceleration.y*deltatime
+      const a_z = event.acceleration.z*deltatime
+
       alpha += d_alpha
       beta += d_beta
       gamma += d_gamma
@@ -55,7 +59,9 @@ function handleMotionEvent(event) {
       const coords = {
         x, y, 
         alpha, beta, gamma, 
-        d_alpha, d_beta, d_gamma
+        d_alpha, d_beta, d_gamma,
+        a_x, a_y, a_z,
+        deltatime
       }
 
       console.log("handleMotionEvent", coords)
