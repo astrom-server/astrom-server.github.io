@@ -11,10 +11,15 @@ motion_callbacks.push(
         const x_ax = new THREE.Vector3(1, 0, 0).applyQuaternion(rot)
         const y_ax = new THREE.Vector3(0, 1, 0).applyQuaternion(rot)
         const z_ax = new THREE.Vector3(0, 0, 1).applyQuaternion(rot)
-        vel.add(new THREE.Vector3(x_ax.multiplyScalar(coords.a_x * coords.deltaTime)))
-        vel.add(new THREE.Vector3(y_ax.multiplyScalar(coords.a_y * coords.deltaTime)))
-        vel.add(new THREE.Vector3(z_ax.multiplyScalar(coords.a_z * coords.deltaTime)))
-        camera.position.add(vel.multiplyScalar(coords.deltaTime))
+        console.log("old vel", vel)
+        if (coords.a_x != 0) vel.add(x_ax.clone().multiplyScalar(coords.a_x * coords.deltaTime))
+        console.log("new vel", vel)
+        if (coords.a_y != 0) vel.add(y_ax.clone().multiplyScalar(coords.a_y * coords.deltaTime))
+        console.log("new vel", vel)
+        if (coords.a_z != 0) vel.add(z_ax.clone().multiplyScalar(coords.a_z * coords.deltaTime))
+        console.log("new vel", vel)
+        console.log("deltatime", coords.deltaTime)
+        console.log("camera position", camera.position)
         camera.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(x_ax, coords.d_alpha*Math.PI/180)); 
         camera.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(y_ax, coords.d_beta*Math.PI/180)); 
         camera.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(z_ax, coords.d_gamma*Math.PI/180)); 
@@ -39,11 +44,15 @@ for (let i = 0; i < 100; i++) {
     scene.add( cube );
 }
 
+let animation_lastTime = Date.now()
 function animate() {
-	requestAnimationFrame( animate );
+    deltaTime = (Date.now() - animation_lastTime) / 1000
+    animation_lastTime = Date.now()
+    camera.position.add(vel.clone().multiplyScalar(deltaTime))
     renderer.setSize( window.innerWidth, window.innerHeight );
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix()
 	renderer.render( scene, camera );
+	requestAnimationFrame( animate );
 }
 animate();

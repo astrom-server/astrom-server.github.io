@@ -33,22 +33,22 @@ let image_count = 20;
 let lastTime = undefined;
 function handleMotionEvent(event) {
     if (lastTime != undefined) {
-      let deltatime = (Date.now() - lastTime)/1000
+      let deltaTime = (Date.now() - lastTime)/1000
 
-      const d_alpha = event.rotationRate.alpha*deltatime
-      const d_beta = event.rotationRate.beta*deltatime
-      const d_gamma = event.rotationRate.gamma*deltatime
+      const d_alpha = event.rotationRate.alpha*deltaTime
+      const d_beta = event.rotationRate.beta*deltaTime
+      const d_gamma = event.rotationRate.gamma*deltaTime
 
-      const a_x = event.acceleration.x*deltatime
-      const a_y = event.acceleration.y*deltatime
-      const a_z = event.acceleration.z*deltatime
+      const a_x = event.acceleration.x
+      const a_y = event.acceleration.y
+      const a_z = event.acceleration.z
 
       alpha += d_alpha
       beta += d_beta
       gamma += d_gamma
 
-      const dx = event.rotationRate.beta*100*image_count/360*deltatime
-      const dy = event.rotationRate.alpha*100*image_count/360*deltatime
+      const dx = event.rotationRate.beta*100*image_count/360*deltaTime
+      const dy = event.rotationRate.alpha*100*image_count/360*deltaTime
 
       const cos = Math.cos(Math.PI*gamma/180)
       const sin = Math.sin(Math.PI*gamma/180)
@@ -61,7 +61,7 @@ function handleMotionEvent(event) {
         alpha, beta, gamma, 
         d_alpha, d_beta, d_gamma,
         a_x, a_y, a_z,
-        deltatime
+        deltaTime
       }
 
       console.log("handleMotionEvent", coords)
@@ -92,10 +92,16 @@ function enable_gyro(message) {
 }
 
 function keypress(event) {
+  console.log(event.key)
   let rotation_rate = {
     'alpha': 0,
     'beta': 0,
     'gamma': 0,
+  }
+  let acceleration = {
+    'x': 0,
+    'y': 0,
+    'z': 0,
   }
   switch (event.key) {
     case "a":
@@ -116,8 +122,26 @@ function keypress(event) {
     case "e":
       rotation_rate['gamma'] = 45
       break;
+    case "ArrowRight":
+      acceleration['x'] = 10
+      break;
+    case "ArrowLeft":
+      acceleration['x'] = -10
+      break;
+    case "ArrowUp":
+      acceleration['y'] = 10
+      break;
+    case "ArrowDown":
+      acceleration['y'] = -10
+      break;
+    case "å":
+      acceleration['z'] = -45
+      break;
+    case "ä":
+      acceleration['z'] = 45
+      break;
   }
-  handleMotionEvent({'rotationRate': rotation_rate})
+  handleMotionEvent({'rotationRate': rotation_rate, 'acceleration': acceleration})
 }
 window.addEventListener('keydown', keypress, true)
 
