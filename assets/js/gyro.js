@@ -35,10 +35,13 @@ function handleMotionEvent(event) {
     if (lastTime != undefined) {
       let deltatime = (Date.now() - lastTime)/1000
 
+      const d_alpha = event.rotationRate.alpha*deltatime
+      const d_beta = event.rotationRate.beta*deltatime
+      const d_gamma = event.rotationRate.gamma*deltatime
 
-      alpha += event.rotationRate.alpha*deltatime
-      beta += event.rotationRate.beta*deltatime
-      gamma += event.rotationRate.gamma*deltatime
+      alpha += d_alpha
+      beta += d_beta
+      gamma += d_gamma
 
       const dx = event.rotationRate.beta*100*image_count/360*deltatime
       const dy = event.rotationRate.alpha*100*image_count/360*deltatime
@@ -50,7 +53,9 @@ function handleMotionEvent(event) {
       y += cos*dy - sin*dx;
 
       const coords = {
-        x, y, alpha, beta, gamma
+        x, y, 
+        alpha, beta, gamma, 
+        d_alpha, d_beta, d_gamma
       }
 
       console.log("handleMotionEvent", coords)

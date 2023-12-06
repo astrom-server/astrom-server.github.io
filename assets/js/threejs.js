@@ -5,7 +5,14 @@ if (typeof motion_callbacks == "undefined") {
 motion_callbacks.push(
     (coords) => {
         console.log(coords)
-        camera.rotation.setFromVector3(new THREE.Vector3(coords.beta, coords.gamma, coords.alpha).multiplyScalar(Math.PI/180))
+        const rot = camera.quaternion.clone();
+        const x_ax = new THREE.Vector3(1, 0, 0).applyQuaternion(rot)
+        const y_ax = new THREE.Vector3(0, 1, 0).applyQuaternion(rot)
+        const z_ax = new THREE.Vector3(0, 0, 1).applyQuaternion(rot)
+        camera.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(x_ax, coords.d_alpha*Math.PI/180)); 
+        camera.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(y_ax, coords.d_beta*Math.PI/180)); 
+        camera.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(z_ax, coords.d_gamma*Math.PI/180)); 
+        camera.updateMatrix()
     }
 )
 
