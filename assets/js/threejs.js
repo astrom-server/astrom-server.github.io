@@ -44,14 +44,50 @@ for (let i = 0; i < 100; i++) {
     scene.add( cube );
 }
 
+
+
+
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+
+
+
+function raycast() {
+
+	// update the picking ray with the camera and pointer position
+	raycaster.setFromCamera( pointer, camera );
+
+	// calculate objects intersecting the picking ray
+	const intersects = raycaster.intersectObjects( scene.children );
+
+	for ( let i = 0; i < intersects.length; i ++ ) {
+
+		intersects[ i ].object.material.color.set(new THREE.Color(Math.random(), Math.random(), Math.random()))
+
+	}
+
+	renderer.render( scene, camera );
+
+}
+
+window.addEventListener( 'click', ( event ) => {
+	pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    raycast()
+});
+
+
+
 let animation_lastTime = Date.now()
 function animate() {
     deltaTime = (Date.now() - animation_lastTime) / 1000
     animation_lastTime = Date.now()
-    camera.position.add(vel.clone().multiplyScalar(deltaTime))
+    //camera.position.add(vel.clone().multiplyScalar(deltaTime))
+
     renderer.setSize( window.innerWidth, window.innerHeight );
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix()
+
 	renderer.render( scene, camera );
 	requestAnimationFrame( animate );
 }
