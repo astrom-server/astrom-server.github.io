@@ -1,25 +1,18 @@
 import { FontLoader } from "./FontLoader.js";
 import { TextGeometry } from "./TextGeometry.js";
 
+
+
+// ------------------------------------------ GYRO ------------------------------------------
 if (typeof motion_callbacks == "undefined") {
     motion_callbacks = []
 }
 motion_callbacks.push(
     (coords) => {
-        console.log(coords)
         const rot = camera.quaternion.clone();
         const x_ax = new THREE.Vector3(1, 0, 0).applyQuaternion(rot)
         const y_ax = new THREE.Vector3(0, 1, 0).applyQuaternion(rot)
         const z_ax = new THREE.Vector3(0, 0, 1).applyQuaternion(rot)
-        console.log("old vel", vel)
-        if (coords.a_x != 0) vel.add(x_ax.clone().multiplyScalar(coords.a_x * coords.deltaTime))
-        console.log("new vel", vel)
-        if (coords.a_y != 0) vel.add(y_ax.clone().multiplyScalar(coords.a_y * coords.deltaTime))
-        console.log("new vel", vel)
-        if (coords.a_z != 0) vel.add(z_ax.clone().multiplyScalar(coords.a_z * coords.deltaTime))
-        console.log("new vel", vel)
-        console.log("deltatime", coords.deltaTime)
-        console.log("camera position", camera.position)
         camera.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(x_ax, coords.d_alpha*Math.PI/180)); 
         camera.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(y_ax, coords.d_beta*Math.PI/180)); 
         camera.applyQuaternion(new THREE.Quaternion().setFromAxisAngle(z_ax, coords.d_gamma*Math.PI/180)); 
@@ -27,23 +20,66 @@ motion_callbacks.push(
     }
 )
 
-let vel = new THREE.Vector3()
+
+
+
+
+// ------------------------------------------ THREE JS ------------------------------------------
+
+//Setup
 const scene = new THREE.Scene();
+window.scene = scene
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
-document.body.style.margin = 0
+
+// STARS
+var positions = new Array(0);
+var colors = new Array(0);
+for ( var i = 0; i < 10000; i ++ ) {
+    let x = (0.5 - Math.random())*2000;
+    let y = (0.5 - Math.random())*2000;
+    let z = (0.5 - Math.random())*2000;
+    positions.push(x, y, z);
+    colors.push(Math.random(), Math.random(), Math.random());
+}
+var starsGeometry = new THREE.BufferGeometry();
+starsGeometry.setAttribute(
+    "position", new THREE.Float32BufferAttribute(positions, 3)
+);
+starsGeometry.setAttribute(
+    "color", new THREE.Float32BufferAttribute(colors, 3)
+);
+var starsMaterial = new THREE.PointsMaterial( { size: 1,  vertexColors: true } );
+var starField = new THREE.Points( starsGeometry, starsMaterial );
+scene.add( starField );
+function set_star_color(t) {
+    let colors = []
+    for ( var i = 0; i < 10000; i ++ ) {
+        const s = Math.sin(t + i)
+        colors.push(s, s, Math.sqrt(s));
+    }
+    starField.geometry.setAttribute(
+        "color", new THREE.Float32BufferAttribute(colors, 3)
+    );
+}
+set_star_color(0)
+
+const word_stars = []
 
 
-const particles = []
 
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
+renderer.domElement.addEventListener( 'click', ( event ) => {
+	pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    raycast()
+});
 
-
-
+let words = []
 function raycast() {
 
 	// update the picking ray with the camera and pointer position
@@ -52,21 +88,20 @@ function raycast() {
 	// calculate objects intersecting the picking ray
 	const intersects = raycaster.intersectObjects( scene.children );
 
-	for ( let i = 0; i < intersects.length; i ++ ) {
+    if (intersects.length == 0) return
 
-		intersects[ i ].object.material.color.set(new THREE.Color(Math.random(), Math.random(), Math.random()))
-
-	}
-
+    let object = intersects[0].object
+    while (object.parent && object.userData.word == undefined) {
+        object = object.parent
+    }
+    const word = object.userData.word
+    console.log(word)
+    words.push(word)
+    check_search_enabled()
+    console.log(words)
 	renderer.render( scene, camera );
 
 }
-
-window.addEventListener( 'click', ( event ) => {
-	pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-	pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-    raycast()
-});
 
 const fonts = []
 const loader = new FontLoader();
@@ -74,18 +109,27 @@ loader.load( '../assets/fonts/Oddly Calming_Regular.json', function ( font ) {
     fonts.push(font)
 } );
 
-let word_json;
+let fetching = false
+let word_list;
 function load_json(callback) {
-    fetch('/assets/words_dictionary.json')
-    .then((response) => response.json())
-    .then((json) => {
-        word_json = json
+    if (fetching) return
+    fetching = true
+    fetch('https://raw.githubusercontent.com/arstgit/high-frequency-vocabulary/master/30k.txt')
+    .then((response) => response.text())
+    .then((txt) => {
+        word_list = txt.split("\t\n")
         callback()
     });
 }
+function random_word() {
+    const y = Math.random()
+    const x = word_list.length * (1-Math.sqrt(1 - (y-1)*(y-1)))
+    const idx = Math.floor(x)
+    return word_list[idx]
+}
 
 function add_star() {
-    if (!word_json) {
+    if (!word_list) {
         console.log("reading")
         load_json(() => add_star())
         return
@@ -102,16 +146,15 @@ function add_star() {
     group.lookAt(new THREE.Vector3())
     
     if (fonts.length > 0) {
-
-        const keys = Object.keys(word_json);
-        let word = keys[Math.floor(Math.random()*keys.length)]
+        
+        let word = random_word()
 
         geometry = new TextGeometry( word, {
             font: fonts[0],
             size: 15,
             height: 5,
             curveSegments: 12,
-        } );
+        });
         material = new THREE.MeshBasicMaterial( { color: new THREE.Color(0, 0, 0), transparent: true } ); 
         let text = new THREE.Mesh( geometry, material );
         text.geometry.computeBoundingBox()
@@ -120,12 +163,13 @@ function add_star() {
         let size = bb.getSize(new THREE.Vector3())
         text.scale.multiplyScalar(8/size.x)
 
+        group.userData.word = word
         group.add(text)
     }
 
     group.userData.startTime = Date.now()
     group.userData.lifeTime = 10000
-    particles.push(group)
+    word_stars.push(group)
     scene.add( group );
 }
 
@@ -135,23 +179,23 @@ const particle_cooldown = {'last': 0, 'max': 100}
 function animate() {
     let deltaTime = (Date.now() - animation_lastTime) / 1000
     animation_lastTime = Date.now()
-    //camera.position.add(vel.clone().multiplyScalar(deltaTime))
+
+    set_star_color(Date.now()/1000)
 
     if (Date.now() - particle_cooldown.last > particle_cooldown.max) {
         particle_cooldown.last = Date.now()
         add_star()
     }
 
-    for (let i = particles.length-1; i >= 0; i--) {
-        const particle = particles[i];
+    for (let i = word_stars.length-1; i >= 0; i--) {
+        const particle = word_stars[i];
         const t = (Date.now() - particle.userData.startTime)/particle.userData.lifeTime;
-        console.log(particle)
         for (const child of particle.children) {
             child.material.opacity = 1-t;
         }
         if (t > 1) {
             scene.remove(particle);
-            particles.splice(i, 1);
+            word_stars.splice(i, 1);
         }
     }
 
@@ -163,3 +207,133 @@ function animate() {
 	requestAnimationFrame( animate );
 }
 animate();
+
+
+
+// ------------------------------------------ SPOTIFY ------------------------------------------
+let access_token;
+function authorize() {
+    const client_id = 'afbe9c700e0744129f9019cab4a6fa12';
+    const client_secret = '7bd9f8659a3649b192a917ff9ad2e3d7';
+    let bytes = new TextEncoder().encode(client_id + ':' + client_secret)
+    let base64 = btoa(String.fromCodePoint(...bytes));
+
+    var body = "grant_type=client_credentials"
+
+    const http = new XMLHttpRequest();
+    const url = 'https://accounts.spotify.com/api/token';
+    http.open("POST", url);
+    http.setRequestHeader('Authorization', 'Basic ' + base64)
+    http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    http.onreadystatechange = (event) => {
+        if (event.target.readyState == 4 && event.target.response) {
+            let response = JSON.parse(event.target.response)
+            console.log(response)
+            access_token = response.access_token
+        } else if (event.target.status == 400) {
+            console.error(event.target)
+        }
+    }
+    http.onerror = (event) => {
+        console.log(event)
+    }
+    http.send(body);
+}
+
+authorize()
+
+
+let search_btn = document.createElement('button')
+search_btn.id = 'search_button'
+document.getElementsByClassName("wrapper")[0].appendChild(search_btn)
+search_btn.addEventListener( 'click', () => {
+
+    if (words.length == 0) return;
+
+    const query = words.join(" ")
+    words = []
+
+    check_search_enabled()
+
+    const http = new XMLHttpRequest();
+    let url = 'https://api.spotify.com/v1/search?';
+    url += 'q=' + encodeURI(query);
+    url += '&type=track'
+    http.open("GET", url);
+    http.setRequestHeader('Authorization', 'Bearer ' + access_token)
+    http.onreadystatechange = (event) => {
+        if (event.target.readyState == 4 && event.target.response) {
+            let response = JSON.parse(event.target.response)
+            console.log(response)
+            for (const pick of response.tracks.items) {
+                if (pick.preview_url != null) {
+                    let pick = response.tracks.items[0]
+                    SetSong(pick)
+                    break;
+                }
+            }
+        } else if (event.target.status == 400) {
+            console.error(event.target)
+        }
+    }
+    http.onerror = (event) => {
+        console.log(event)
+    }
+    http.send();
+});
+function check_search_enabled() {
+
+    if (words.length == 0) {
+        search_btn.style.backgroundColor = "gray"
+        search_btn.innerHTML = "Look to the stars..."
+    } else {
+        search_btn.style.backgroundColor = "white"
+        search_btn.innerHTML = `Search<br>(${words.join(" ")})`
+    }
+}
+check_search_enabled()
+
+
+document.getElementById("song_cover").addEventListener("load", () => {
+    set_song_visible(true)
+})
+document.getElementById("close_button").addEventListener("click", () => {
+    set_song_visible(false)
+    current_audio?.pause()
+})
+function set_song_visible(visible) {
+    let vis = "block"
+    if (!visible) vis = "none"
+    document.getElementById("overlay").style.display = vis
+    document.getElementById("song_display").style.display = vis
+    document.getElementById("song_cover").style.display = vis
+    document.getElementById("song_title").style.display = vis
+    document.getElementById("close_button").style.display = vis
+    document.getElementById("song_artist").style.display = vis
+    console.log(document.getElementById("overlay").style.display)
+} 
+function SetSong(pick) {
+    if (pick == null) {
+        set_song_visible(false)
+        return 
+    }
+    const album_cover = pick.album.images[0];
+    document.getElementById("song_cover").src = album_cover.url
+    document.getElementById("song_title").innerHTML = pick.name
+
+    const artists = []
+    for (const artist of pick.artists) {
+        artists.push(artists.name)
+    }
+    
+    document.getElementById("song_artist").innerHTML = artists.join(", ")
+    //set_song_visible(true)
+    if (pick.preview_url) playSound(pick.preview_url)
+}
+
+let current_audio;
+function playSound(url) {
+    if (current_audio) current_audio.pause()
+    current_audio = new Audio(url);
+    current_audio.play();
+}

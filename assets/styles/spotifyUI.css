@@ -1,0 +1,90 @@
+@font-face {
+    font-family: Albertus;
+    src: url(/assets/fonts/AlbertusMTStd.otf);
+  }
+#search_button {
+    position: absolute;
+    width: min(40vw, 40vh);
+    height: min(20vw, 20vh);
+    bottom: 5vh;
+    left: calc((100vw - min(40vw, 40vh))/2);
+    text-align-last: center;
+    white-space: normal;
+    font-size: min(5vw, 5vh);
+    font-family: 'Albertus';
+}
+
+#overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.2;
+    display: none;
+}
+
+#song_display {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: min(50vw, 50vh);
+    height: min(60vw, 60vh);
+    top: 40vh;
+    left: 50vw;
+    background-color: white;
+    opacity: 1;
+    display: none;
+}
+
+#close_button {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: min(8vw, 8vh);
+    height: min(8vw, 8vh);
+    top: calc(40vh - min(60vw, 60vh)/2);
+    left: calc(50vw + min(50vw, 50vh)/2);
+    background-color: white;
+    border-radius: min(4vw, 4vh);
+    font-size: min(5vw, 5vh);
+    opacity: 1;
+    display: none;
+}
+
+#song_cover {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: min(45vw, 45vh);
+    height: min(45vw, 45vh);
+    top: calc(40vh - min(5vw, 5vh));
+    left: 50vw;
+    background-color: white;
+    opacity: 1;
+    display: none;
+}
+
+#song_title {
+    position: absolute;
+    transform: translate(-50%, 0);
+    width: min(50vw, 50vh);
+    top: calc(40vh + min(19vw, 19vh));
+    left: 50vw;
+    font-size: min(4vw, 4vh);
+    text-align: center;
+    font-family: Albertus;
+    display: none;
+}
+
+#song_artist {
+    position: absolute;
+    transform: translate(-50%, 0);
+    width: min(50vw, 50vh);
+    top: calc(40vh + min(24vw, 24vh));
+    left: 50vw;
+    font-size: min(3vw, 3vh);
+    text-align: center;
+    font-family: Albertus;
+    display: none;
+}
+
+body {
+    margin: 0;
+}

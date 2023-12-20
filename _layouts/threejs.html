@@ -3,10 +3,18 @@
   <body>
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
+        <div id="overlay"></div>
+        <div id="song_display"></div>
+        <img id="song_cover"></img>
+        <button id="close_button">X</button>
+        <div id="song_title">Song title</div>
+        <div id="song_artist">Artist McArtistsson</div>
         {{ content }}
       </div>
     </main>
   </body>
+
+  <link rel="stylesheet" href="/assets/styles/spotifyUI.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.158.0/three.min.js"></script>
   <script type="module" src="/assets/js/threejs.js"></script>
