@@ -188,7 +188,7 @@ function add_star() {
 
 
 let animation_lastTime = Date.now()
-const particle_cooldown = {'last': 0, 'max': 1000}
+const particle_cooldown = {'last': 0, 'max': 100}
 function animate() {
     let deltaTime = (Date.now() - animation_lastTime) / 1000
     animation_lastTime = Date.now()
@@ -279,13 +279,15 @@ search_btn.addEventListener( 'click', () => {
         if (event.target.readyState == 4 && event.target.response) {
             let response = JSON.parse(event.target.response)
             console.log(response)
+            let done = false
             for (const pick of response.tracks.items) {
-                if (pick.preview_url != null) {
-                    let pick = response.tracks.items[0]
+                if (pick != null && pick.preview_url != null) {
                     SetSong(pick)
+                    done = true
                     break;
                 }
             }
+            if (!done) SetSong(response.tracks.items[0])
         } else if (event.target.status == 400) {
             console.error(event.target)
         }
@@ -311,6 +313,11 @@ check_search_enabled()
 document.getElementById("song_cover").addEventListener("load", () => {
     set_song_visible(true)
 })
+document.getElementById("song_cover").addEventListener("click", () => {
+    if (current_track != null) {
+        window.open(current_track.external_urls.spotify);
+    }
+})
 document.getElementById("close_button").addEventListener("click", () => {
     set_song_visible(false)
     current_audio?.pause()
@@ -318,15 +325,15 @@ document.getElementById("close_button").addEventListener("click", () => {
 function set_song_visible(visible) {
     let vis = "block"
     if (!visible) vis = "none"
-    document.getElementById("overlay").style.display = vis
     document.getElementById("song_display").style.display = vis
     document.getElementById("song_cover").style.display = vis
     document.getElementById("song_title").style.display = vis
     document.getElementById("close_button").style.display = vis
     document.getElementById("song_artist").style.display = vis
-    console.log(document.getElementById("overlay").style.display)
 } 
+let current_track = null;
 function SetSong(pick) {
+    current_track = pick
     if (pick == null) {
         set_song_visible(false)
         return 
@@ -341,12 +348,14 @@ function SetSong(pick) {
     }
     
     document.getElementById("song_artist").innerHTML = artists.join(", ").toUpperCase()
-    //set_song_visible(true)
-    if (pick.preview_url) playSound(pick.preview_url)
+    //set_song_visible(true) 
+    if (pick.preview_url != null) playSound(pick.preview_url)
+    else if (current_audio) current_audio.pause()
 }
 
 let current_audio;
 function playSound(url) {
+    console.log(current_audio)
     if (current_audio) current_audio.pause()
     current_audio = new Audio(url);
     current_audio.play();

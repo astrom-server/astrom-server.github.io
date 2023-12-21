@@ -14,15 +14,6 @@
     font-family: 'Albertus';
 }
 
-#overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    opacity: 0.2;
-    display: none;
-}
-
 #song_display {
     position: absolute;
     transform: translate(-50%, -50%);
