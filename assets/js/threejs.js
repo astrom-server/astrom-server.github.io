@@ -42,6 +42,13 @@ for ( var i = 0; i < 10000; i ++ ) {
     let x = (0.5 - Math.random())*2000;
     let y = (0.5 - Math.random())*2000;
     let z = (0.5 - Math.random())*2000;
+    let d = x*x + y*y + z*z
+    while (d < 2500) {
+        x = (0.5 - Math.random())*2000;
+        y = (0.5 - Math.random())*2000;
+        z = (0.5 - Math.random())*2000;
+        d = x*x + y*y + z*z
+    }
     positions.push(x, y, z);
     colors.push(Math.random(), Math.random(), Math.random());
 }
@@ -58,8 +65,8 @@ scene.add( starField );
 function set_star_color(t) {
     let colors = []
     for ( var i = 0; i < 10000; i ++ ) {
-        const s = Math.sin(t + i)
-        colors.push(s, s, Math.sqrt(s));
+        const s = (Math.sin(t + i) + 1)/2
+        colors.push(s, s, s*s);
     }
     starField.geometry.setAttribute(
         "color", new THREE.Float32BufferAttribute(colors, 3)
@@ -105,7 +112,7 @@ function raycast() {
 
 const fonts = []
 const loader = new FontLoader();
-loader.load( '../assets/fonts/Oddly Calming_Regular.json', function ( font ) {
+loader.load( '../assets/fonts/Albertus MT Std_Regular (1).json', function ( font ) {
     fonts.push(font)
 } );
 
@@ -141,6 +148,11 @@ function add_star() {
     const group = new THREE.Group()
     group.add(circle)
     let pos = new THREE.Vector3(Math.random(), Math.random(), Math.random()).subScalar(0.5).normalize().multiplyScalar(50);
+    
+    let valid = true
+    for (const particle of word_stars) {
+        if (particle.position.distanceTo(pos) < 10) return
+    }
     //pos = new THREE.Vector3(0, 0, -50)
     group.position.copy(pos)
     group.lookAt(new THREE.Vector3())
@@ -148,6 +160,7 @@ function add_star() {
     if (fonts.length > 0) {
         
         let word = random_word()
+        if (word.length < 2) return
 
         geometry = new TextGeometry( word, {
             font: fonts[0],
@@ -161,7 +174,7 @@ function add_star() {
         let bb = text.geometry.boundingBox
         text.geometry.translate(-bb.max.x/2,-bb.max.y/2,0)
         let size = bb.getSize(new THREE.Vector3())
-        text.scale.multiplyScalar(8/size.x)
+        text.scale.multiplyScalar(8/3/Math.max(size.x/3, size.y))
 
         group.userData.word = word
         group.add(text)
@@ -175,7 +188,7 @@ function add_star() {
 
 
 let animation_lastTime = Date.now()
-const particle_cooldown = {'last': 0, 'max': 100}
+const particle_cooldown = {'last': 0, 'max': 1000}
 function animate() {
     let deltaTime = (Date.now() - animation_lastTime) / 1000
     animation_lastTime = Date.now()
@@ -190,8 +203,9 @@ function animate() {
     for (let i = word_stars.length-1; i >= 0; i--) {
         const particle = word_stars[i];
         const t = (Date.now() - particle.userData.startTime)/particle.userData.lifeTime;
+        let op = Math.sin(Math.PI*t)
         for (const child of particle.children) {
-            child.material.opacity = 1-t;
+            child.material.opacity = op;
         }
         if (t > 1) {
             scene.remove(particle);
@@ -319,14 +333,14 @@ function SetSong(pick) {
     }
     const album_cover = pick.album.images[0];
     document.getElementById("song_cover").src = album_cover.url
-    document.getElementById("song_title").innerHTML = pick.name
+    document.getElementById("song_title").innerHTML = pick.name//.toUpperCase()
 
     const artists = []
     for (const artist of pick.artists) {
-        artists.push(artists.name)
+        artists.push(artist.name)
     }
     
-    document.getElementById("song_artist").innerHTML = artists.join(", ")
+    document.getElementById("song_artist").innerHTML = artists.join(", ").toUpperCase()
     //set_song_visible(true)
     if (pick.preview_url) playSound(pick.preview_url)
 }

@@ -47,6 +47,7 @@
     font-size: min(5vw, 5vh);
     opacity: 1;
     display: none;
+    color: black;
 }
 
 #song_cover {
@@ -64,25 +65,36 @@
 #song_title {
     position: absolute;
     transform: translate(-50%, 0);
-    width: min(50vw, 50vh);
+    width: min(45vw, 45vh);
+    height: min(4vw, 4vh);
     top: calc(40vh + min(19vw, 19vh));
     left: 50vw;
     font-size: min(4vw, 4vh);
     text-align: center;
     font-family: Albertus;
     display: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: black;
+
 }
 
 #song_artist {
     position: absolute;
     transform: translate(-50%, 0);
-    width: min(50vw, 50vh);
+    width: min(45vw, 45vh);
+    height: min(3vw, 3vh);
     top: calc(40vh + min(24vw, 24vh));
     left: 50vw;
     font-size: min(3vw, 3vh);
     text-align: center;
     font-family: Albertus;
     display: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: black;
 }
 
 body {
