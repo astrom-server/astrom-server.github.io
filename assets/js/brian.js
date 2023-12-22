@@ -46,6 +46,8 @@ function load_monsters_2() {
     client.onreadystatechange = function() {
         if (client.readyState == 4) {
             monster_dict = JSON.parse(client.responseText)
+            document.getElementById("loading_bar").style = "display:None"
+            document.getElementById("overlay_2").style = "display:None"
 
             delete monster_dict["Cloud Giant"]
 
@@ -61,7 +63,7 @@ function load_monsters_2() {
     }
     client.send();
 }
-load_monsters()
+load_monsters_2()
 
 function load_monsters() {
     $(document).ready(function () {
@@ -127,6 +129,7 @@ function find_monster_by_field(key, value) {
 function compare_monsters(true_monster, query_monster) {
     const m1 = monster_dict[true_monster]
     const m2 = monster_dict[query_monster]
+    console.log(m1,m2)
 
     const response = {}
 
@@ -258,10 +261,10 @@ function search_monster() {
         sign = ""
         color = "green"
         if (res['size'] == -1) {
-            sign = "<"
+            sign = "&lt;"
             color = "red"
         } else if (res['size'] == 1) {
-            sign = ">"
+            sign = "&gt;"
             color = "red"
         }
         field.innerHTML = sign + monster['size'][0]
