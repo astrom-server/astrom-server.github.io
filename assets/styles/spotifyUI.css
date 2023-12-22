@@ -12,6 +12,7 @@
     white-space: normal;
     font-size: min(5vw, 5vh);
     font-family: 'Albertus';
+    color: black;
 }
 
 #song_display {
