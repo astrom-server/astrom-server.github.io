@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+  <body>
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+
+        <div id="title1">Monster Manual</div>
+        <div id="title2">MANIA</div>
+
+        <!--<image id="monster_image" src="https://www.dnd5eapi.co/api/images/monsters/aboleth.png"></image>-->
+        <div id="monster_title"></div>
+
+
+        <select id="monster_search" style="width:70vw; height:5vh;display:none" class="operator"> 
+          <option value="">Guess a Monster...</option>
+        </select>
+        <button id="search_button"><i class="fa fa-search"></i></button>
+
+        <div id="search_history"></div>
+
+        <div id="win_screen" style="display:none">
+          <div id="overlay"></div>
+          <div id="win_text">YOU WIN!!</div>
+          <div id="monster_name">Monster</div>
+          <button id="start_button">replay</button>
+        </div>
+
+
+        <div id="overlay_2"></div>
+        <div id="loading_bar"><div id="loading_progression"></div></div>
+
+        {{ content }}
+      </div>
+    </main>
+  </body>
+
+  <link rel="stylesheet" href="/assets/styles/brianUI.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <script src="/assets/js/brian.js"></script>
+</html>

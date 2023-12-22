@@ -1,0 +1,243 @@
+@font-face {
+    font-family: Albertus;
+    src: url(/assets/fonts/AlbertusMTStd.otf);
+}
+
+body {
+    margin: 0;
+    background-color: burlywood;
+}
+
+#title1 {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 10vh;
+    top: 8vh;
+    left: 50vw;
+    font-size: 6vh;
+    font-family: Albertus;
+    text-align: center;
+    white-space: nowrap;
+    -webkit-text-stroke-color: white;
+    -webkit-text-stroke-width: 2px;
+}
+#title2 {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 10vh;
+    top: 14vh;
+    left: 50vw;
+    font-size: 9vh;
+    font-family: Albertus;
+    text-align: center;
+    -webkit-text-stroke-color: red;
+    -webkit-text-stroke-width: 2px;
+    font-weight: bold;
+}
+
+#loading_bar {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 5%;
+    left: 50vw;
+    top: 50vh;
+    background-color: black;
+    padding: 5px 5px 5px 5px;
+}
+#loading_progression {
+    position: absolute;
+    transform: translate(0, -50%);
+    width: calc(0% - 10px);
+    height: calc(100% - 10px);
+    top: 50%;
+    background-color: rebeccapurple;
+}
+
+#monster_image {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    max-width: 40vw;
+    max-height: 40vw;
+    left: 50vw;
+    top: 35vh;
+}
+#monster_title {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 5vh;
+    left: 50vw;
+    top: 25vh;
+    font-size: 5vh;
+    font-family: Albertus;
+    text-align: center;
+    -webkit-text-stroke-color: white;
+    -webkit-text-stroke-width: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#search_button {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 5vh;
+    height: 5vh;
+    left: calc(50vw + 70vw / 2 + 3vh);
+    top: 35vh;
+    font-size: 50px;
+    font-family: Albertus;
+    padding: 10px;
+}
+
+
+
+.select2 {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 60vw;
+    height: 5vh;
+    left: 50vw;
+    top: 35vh;
+    font-size: 50px;
+    font-family: Albertus;
+}
+.select2-selection {
+    height: 5vh !important;
+    display: block !important;
+}
+.select2-selection__rendered {
+    overflow:visible !important;
+    transform: translate(0, -50%)!important;
+    top: 50%!important;
+    position: relative!important;
+}
+.select2-results__options {
+    max-height: 50vh !important;
+}
+.select2-search__field {
+    height: 4vh;
+    font-size: 3vh;
+    font-family: Albertus;
+}
+.select2-results__option {
+    height: 4vh;
+    font-size: 3vh;
+    font-family: Albertus;
+}
+#search_history {
+    position: absolute;
+    left: 10vw;
+    right: 10vw;
+    top: 40vh;
+    bottom: 5vh;
+    background: white;
+    border: solid black 2px;
+    overflow: scroll;
+}
+
+
+
+.search_item {
+    position: relative;
+    width: 100%;
+    height: 5vh;
+    background: white;
+    border-color: black;
+    border: 5px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    display: flex;
+}
+.search_item_content {
+    line-height: 5vh;
+    font-size: 1.2vh;
+    white-space: nowrap;
+    border: solid 1px black;
+    overflow: hidden;
+}
+.search_item_title {
+    width: 30%;
+    padding-left: 5px;
+    text-overflow: ellipsis;
+}
+.search_item_el {
+    width: calc(40% / 3);
+    flex-shrink: 3;
+    text-align: center;
+}
+
+
+
+#win_screen {
+    position:absolute;
+    height:100%;
+    width: 100%;
+    top: 0;
+}
+#overlay_2 {
+    position:absolute;
+    height:100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.5;
+    top: 0;
+}
+#overlay {
+    position:absolute;
+    height:100%;
+    width: 100%;
+    background-color: burlywood;
+    opacity: 1;
+    top: 0;
+}
+#win_text {
+    position:absolute;
+    transform: translate(-50%, -50%);
+    height: 20vh;
+    width: 100vw;
+    left: 50vw;
+    top: 30vh;
+    background-color: transparent;
+    opacity: 1;
+    color: white;
+    font-size: 8vh;
+    -webkit-text-stroke-color: green;
+    -webkit-text-stroke-width: 5px;
+    text-align: center;
+    font-family: Albertus;
+}
+#monster_name {
+    position:absolute;
+    transform: translate(-50%, -50%);
+    height: 20vh;
+    width: 100vw;
+    left: 50vw;
+    top: 45vh;
+    background-color: transparent;
+    opacity: 1;
+    color: black;
+    font-size: 5vh;
+    -webkit-text-stroke-color: white;
+    -webkit-text-stroke-width: 3px;
+    text-align: center;
+    font-family: Albertus;
+}
+#start_button {
+    position:absolute;
+    height: 10vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    width: 50vw;
+    background-color: white;
+    opacity: 1;
+    color: red;
+    -webkit-text-stroke-color: black;
+    -webkit-text-stroke-width: 2px;
+    font-size: 5vh;
+    text-align: center;
+    font-family: Albertus;
+    top: 50vh;
+}
