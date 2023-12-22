@@ -345,7 +345,7 @@ document.getElementById("song_cover").addEventListener("load", () => {
     set_song_visible(true)
     setTimeout(() => {
         const title = document.getElementById("song_title")
-        //title.style.fontSize = "calc(min(4vw, 4vh)*" + title.clientWidth/title.scrollWidth + ")"
+        title.style.fontSize = "calc(min(4vw, 4vh)*" + title.clientWidth/title.scrollWidth + ")"
     }, 50)
 })
 document.getElementById("song_cover").addEventListener("click", () => {
