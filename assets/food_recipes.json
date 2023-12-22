@@ -1,6 +1,6 @@
 {
     "q": [
-        "pizza", "pie", "cheese", "vegetables", "bread", "toast", "burger", "lasagna", "fresh", "crispy"
+        "alcohol cocktail","pizza", "pie", "cheese", "vegetables", "bread", "toast", "burger", "lasagna", "fresh", "crispy", "egg","ice cream and custard","pasta","pastry","seafood","special occasions"
     ],
     "mealType": [
         "breakfast",
@@ -9,6 +9,6 @@
         "snack",
         "teatime"
     ],
-    "dishType": ["alcohol cocktail","biscuits and cookies","bread","cereals","condiments and sauces","desserts","drinks","egg","ice cream and custard","main course","pancake","pasta","pastry","pizza","preps","preserve","salad","sandwiches","seafood","side dish","soup","special occasions","starter","sweets"],
+    "dishType": ["biscuits and cookies","bread","cereals","condiments and sauces","desserts","drinks","main course","pancake","preps","preserve","salad","sandwiches","side dish","soup","starter","sweets"],
     "cuisineType": ["american","asian","british","caribbean","central europe","chinese","eastern europe","french","greek","indian","italian","japanese","korean","kosher","mediterranean","mexican","middle eastern","nordic","south american","south east asian","world"]
 }
