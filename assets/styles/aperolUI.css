@@ -1,0 +1,56 @@
+@font-face {
+    font-family: Albertus;
+    src: url(/assets/fonts/AlbertusMTStd.otf);
+}
+
+.aperol_title {
+    font-family: Albertus;
+    font-size: 4vh;
+    color: orangered;
+    -webkit-text-stroke-color: black;
+    -webkit-text-stroke-width: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+.aperol_img {
+    width: 100vw;
+}
+
+#buttons {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vw;
+    left: 50vw;
+    top: 50vh;
+}
+.aperol_button {
+    position: absolute;
+    border-radius: 12.5vw;
+    transform: translate(-50%, -50%);
+    width: 25vw;
+    height: 25vw;
+    background-color: orangered;
+    border: solid black 5px;
+}
+.aperol_button > i {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    font-size: 12vw;
+    line-height: 25vw;
+}
+.aperol_button_text {
+    font-family: Albertus;
+    position: absolute;
+    border-radius: 12.5vw;
+    transform: translate(-50%, -50%);
+    font-size: 4vw;
+    width: 15vw;
+    height: 4vw;
+    color: orange;
+    text-align: center;
+    -webkit-text-stroke-color: black;
+    -webkit-text-stroke-width: 1px;
+    background-color: rgba(0,0,0,0.5);
+}
