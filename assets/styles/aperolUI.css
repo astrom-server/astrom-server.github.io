@@ -3,6 +3,15 @@
     src: url(/assets/fonts/AlbertusMTStd.otf);
 }
 
+body {
+    margin: 0;
+}
+
+.aperol_img {
+    width: calc(100vw - 16px);
+}
+
+
 .aperol_title {
     font-family: Albertus;
     font-size: 4vh;
@@ -12,17 +21,13 @@
     text-transform: uppercase;
     margin-bottom: 0;
 }
-.aperol_img {
-    width: 100vw;
-}
-
 #buttons {
     position: absolute;
     transform: translate(-50%, -50%);
     width: 100vw;
     height: 100vw;
     left: 50vw;
-    top: 50vh;
+    top: 60vh;
 }
 .aperol_button {
     position: absolute;
@@ -53,4 +58,22 @@
     -webkit-text-stroke-color: black;
     -webkit-text-stroke-width: 1px;
     background-color: rgba(0,0,0,0.5);
+}
+
+#hos_lena {
+    font-family: 'Albertus';
+    color: white;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50vw;
+    top: 33vw;
+    font-size: 8vw;
+    transform: rotate(348deg);
+}
+
+#aperol_logo {
+    position: absolute;
+    width: 100vw;
+    top: 0;
+    left: 0;
 }

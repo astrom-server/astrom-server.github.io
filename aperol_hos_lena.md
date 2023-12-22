@@ -11,6 +11,9 @@ permalink: /aperol_hos_lena/
 </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+<image src="/assets/aperol_logo.jpeg" id="aperol_logo"></image>
+<div id="hos_lena">hos Lena</div>
+
 <div id="buttons"> 
     <button id="btn1" class="aperol_button" style="top:25%; left:50%"><i class="fa fa-music"></i></button>
     <div class="aperol_button_text" style="top:calc(25% + 15vw); left:50%">MUSIK</div>

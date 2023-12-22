@@ -1,0 +1,32 @@
+{
+    "Aperol Spritz": {
+        "image": "/assets/aperol_spritz.png",
+        "ingredients": [
+            "3 ounces prosecco",
+            "2 ounces Aperol",
+            "1 ounce club soda",
+            "Garnish: orange slice"
+        ]
+    },
+    "Paper Plane": {
+        "image": "/assets/paper_plane.png",
+        "ingredients": [
+            "3/4 ounce bourbon",
+            "3/4 ounce Aperol",
+            "3/4 ounce Amaro Nonino Quintessentia",
+            "3/4 ounce lemon juice, freshly squeezed"
+        ]
+    },
+    "Scarlet Spritz": {
+        "image": "/assets/scarlet_spritz.png",
+        "ingredients": [
+            "Absinthe, to rinse",
+            "1.5 ounces strawberry-infused Aperol",
+            "0.5 ounces Lillet Blanc aperitif",
+            "2 dashes rhubarb bitters",
+            "Sparkling wine, chilled, to top",
+            "Garnish: lemon twist",
+            "Garnish: strawberry"
+        ]
+    }
+}
