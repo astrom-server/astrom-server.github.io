@@ -142,7 +142,7 @@ body {
     position: absolute;
     left: 40vw;
     right: 40vw;
-    top: 96vh;
+    height: 3vh;
     bottom: 1vh;
     background: white;
     border: solid black 2px;
