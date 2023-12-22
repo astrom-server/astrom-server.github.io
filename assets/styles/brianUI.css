@@ -137,7 +137,17 @@ body {
     border: solid black 2px;
     overflow: scroll;
 }
-
+.bottom_button {
+    font-family: Albertus;
+    position: absolute;
+    left: 40vw;
+    right: 40vw;
+    top: 96vh;
+    bottom: 1vh;
+    background: white;
+    border: solid black 2px;
+    font-size: 1.5vh;
+}
 
 
 .search_item {

@@ -287,7 +287,18 @@ document.getElementById("search_button").addEventListener('click', search_monste
 
 
 
-
+document.getElementById('give_up').addEventListener('click', give_up)
+document.getElementById('restart').addEventListener('click', restart_game)
+function give_up() {
+    document.getElementById("monster_title").innerHTML = current_monster;
+    document.getElementById('give_up').style = "display: none"
+    document.getElementById('restart').style = "display: block"
+}
+function restart_game() {
+    set_random_monster()
+    document.getElementById('give_up').style = "display: block"
+    document.getElementById('restart').style = "display: none"
+}
 
 
 
